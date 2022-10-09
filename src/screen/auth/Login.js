@@ -1,0 +1,87 @@
+import React from 'react'
+import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
+
+const Login = () => {
+    return (
+        <SafeAreaView style={styles.mainContainer}>
+            <ScrollView>
+                <View>
+                    <View style={styles.container}>
+                        <Image resizeMode={'contain'} style={styles.defultBg} source={require('../../../assets/cg.png')} />
+                    </View>
+                    <View style={styles.container}>
+                        <Image resizeMode={'contain'} source={require('../../../assets/SELFHEALING.png')} />
+                    </View>
+                    <View style={styles.container}>
+                        <Image resizeMode={'contain'} source={require('../../../assets/STAYWITHNOPOVERTY.png')} />
+                    </View>
+                    <View style={styles.loginBody}>
+                        <View style={styles.formInput}>
+                            <TextInput style={styles.textInput} placeholder='Email'></TextInput>
+                        </View>
+                        <View style={styles.formInput}>
+                            <TextInput style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
+                        </View>
+                        <View style={styles.formInput}>
+                            <TouchableOpacity style={styles.defaultButton}>
+                                <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Login</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.formInput}>
+                           <TouchableOpacity>
+                            <Text style={{color:'#fff', textAlign:'center', fontSize:16, fontWeight:'italic'}}>Forgot Password</Text>
+                           </TouchableOpacity>
+                        </View>
+                        <View style={styles.formInput}>
+                            <TouchableOpacity>
+                                <Text style={{textAlign:'center',fontSize:16,color:'#fff', fontWeight:'bold'}}>Need Account ? Register Now</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+
+    )
+}
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        marginTop: 18,
+    },
+    container: {
+        alignItems: 'center',
+        flex: 1,
+        marginBottom: 5,
+    },
+    defultBg: {
+        width: '100%',
+        height: 150
+    },
+    loginBody: {
+        padding: 10
+    },
+    formInput: {
+        marginBottom: 10,
+        padding: 10,
+    },
+    textInput: {
+        padding: 10,
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: '#10006b',
+        color:'#10006b',
+        borderRadius: 50,
+        backgroundColor:'#fff'
+    },
+    defaultButton: {
+        padding: 15,
+        backgroundColor: '#FF6D27',
+        borderRadius: 50,
+    },
+    
+
+})
+
+export default Login
