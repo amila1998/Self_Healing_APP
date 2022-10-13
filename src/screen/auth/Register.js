@@ -8,7 +8,11 @@ import RolesData from '../../Data/Roles'
 const Register = () => {
     const [gender,setGender]=React.useState('');
     const [role,setRole]=React.useState('');
-
+    const [email,setEmail]=React.useState('')
+    const [fName,setFName]=React.useState('')
+    const [LName,setLName]=React.useState('')
+    const [password,setPassword]=React.useState('')
+    const [cPassword,setPCassword]=React.useState('')
 
   return (
     <SafeAreaView style={styles.mainContainer}>

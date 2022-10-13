@@ -9,6 +9,7 @@ import bGStyles from './src/Styles/Background';
 import Colors from './src/Styles/Colors';
 
 export default function App() {
+ 
   return (
     <LinearGradient
       // Background Linear Gradient
