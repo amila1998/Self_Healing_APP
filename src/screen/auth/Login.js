@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const Login = () => {
+    const [email,setEmail]=useState('')
+    const [Password,setPasword]=useState('')
     return (
         <SafeAreaView style={styles.mainContainer}>
             <ScrollView>
@@ -18,10 +20,10 @@ const Login = () => {
                     </View>
                     <View style={styles.loginBody}>
                         <View style={styles.formInput}>
-                            <TextInput style={styles.textInput} placeholder='Email'></TextInput>
+                            <TextInput onChangeText={setEmail} style={styles.textInput} placeholder='Email'></TextInput>
                         </View>
                         <View style={styles.formInput}>
-                            <TextInput style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
+                            <TextInput onChangeText={setPasword} style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
                         </View>
                         <View style={styles.formInput}>
                             <TouchableOpacity style={styles.defaultButton}>
