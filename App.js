@@ -1,22 +1,18 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Login from './src/screen/auth/Login';
-import Register from './src/screen/auth/Register';
-
-import Home from './src/screen/Home';
+import { StyleSheet} from 'react-native';
+import AppRouter from './src/router/router';
 import bGStyles from './src/Styles/Background';
 import Colors from './src/Styles/Colors';
 
 export default function App() {
- 
+
   return (
     <LinearGradient
       // Background Linear Gradient
-      colors={[Colors.light.white, Colors.light.lightBlue,Colors.light.lightBlue, Colors.light.darkBlue]}
+      colors={[Colors.light.white, Colors.light.lightBlue, Colors.light.lightBlue, Colors.light.darkBlue]}
       style={bGStyles.background}
     >
-      <Register/>
+      <AppRouter />
     </LinearGradient>
 
   );
