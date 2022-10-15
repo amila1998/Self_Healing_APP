@@ -1,15 +1,23 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react'
 
 import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import bGStyles from '../Styles/Background';
 import Colors from '../Styles/Colors'
 
 const Home = () => {
     return (
-        <SafeAreaView style={{flex:1}}>
-           
-        </SafeAreaView>
+        <LinearGradient
+            // Background Linear Gradient
+            colors={[Colors.light.white, Colors.light.lightBlue, Colors.light.lightBlue, Colors.light.darkBlue]}
+            style={bGStyles.background}
+        >
+            <SafeAreaView style={styles.mainContainer}>
+                <View>
+                    <Text>Home</Text>
+                </View>
+            </SafeAreaView>
+        </LinearGradient>
 
     )
 }
@@ -21,8 +29,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     dummyText: {
- 
-        borderColor: 'blue',
     },
 
 })
