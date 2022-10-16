@@ -3,7 +3,7 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {Ionicons,MaterialCommunityIcons,FontAwesome} from '@expo/vector-icons';
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Profile from '../screen/Profile';
@@ -30,7 +30,7 @@ const MainTabScreen = () => (
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStackScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarColor: '#36455A',
@@ -87,6 +87,20 @@ const MainTabScreen = () => (
      
     </Tab.Navigator>
 );
+
+const HomeStackScreen = ({navigation}) => (
+    <HomeStack.Navigator screenOptions={{
+            headerStyle: {
+            backgroundColor: '#36455A',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+            fontWeight: 'bold'
+            }
+        }}>
+            <HomeStack.Screen name="Home" component={Home}  options={{ headerShown: false }}/>
+    </HomeStack.Navigator>
+    );
 
 export default MainTabScreen;
 
