@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import bGStyles from '../Styles/Background';
 import Colors from '../Styles/Colors'
 
-const Home = () => {
+const Notifications = () => {
     return (
         <LinearGradient
             // Background Linear Gradient
@@ -14,7 +14,7 @@ const Home = () => {
         >
             <SafeAreaView style={styles.mainContainer}>
                 <View>
-                    <Text>Home</Text>
+                    <Text>Notifications</Text>
                 </View>
             </SafeAreaView>
         </LinearGradient>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default Home
+export default Notifications

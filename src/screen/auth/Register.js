@@ -18,6 +18,9 @@ const Register = () => {
     const [cPassword, setPCassword] = React.useState('')
     const Navigator = useNavigation();
    
+    const navigateLogin =()=>{
+        Navigator.navigate('Login')
+    }
     return (
         <LinearGradient
             // Background Linear Gradient

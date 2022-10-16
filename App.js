@@ -1,19 +1,22 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
 import { StyleSheet} from 'react-native';
-import AppRouter from './src/router/router';
+import MainTabScreen from './src/router/MainTabScreenRoute';
+import RootStackScreen from './src/router/RootStackScreensRoute';
 import bGStyles from './src/Styles/Background';
 import Colors from './src/Styles/Colors';
 
 export default function App() {
-
+  const [isLoggin, setIsLoggin] = React.useState(true)
   return (
-    <LinearGradient
-      // Background Linear Gradient
-      colors={[Colors.light.white, Colors.light.lightBlue, Colors.light.lightBlue, Colors.light.darkBlue]}
-      style={bGStyles.background}
-    >
-      <AppRouter />
-    </LinearGradient>
+    <NavigationContainer>
+{
+  !isLoggin?<RootStackScreen/>:<MainTabScreen/>
+}
+</NavigationContainer>
+      
+   
 
   );
 }
