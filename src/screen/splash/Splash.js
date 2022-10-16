@@ -8,22 +8,15 @@ import Colors from '../../Styles/Colors'
 const Splash = () => {
     const [isGo, setisGo] = React.useState(true)
     const navigation = useNavigation();
-    const [isLoggin, setIsLoggin] = React.useState(true)
-
-
 
     React.useEffect(() => {
         if (isGo) {
             setTimeout(() => {
-                if (isLoggin) {
-                    navigation.navigate('Home');
-                } else {
-                    navigation.navigate('Login');
-                }
+                navigation.navigate('Login');
                 setisGo(false)
             }, 2000)
         }
-    }, [isGo, isLoggin])
+    }, [isGo])
     return (
         <LinearGradient
             // Background Linear Gradient
