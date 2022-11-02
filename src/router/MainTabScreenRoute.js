@@ -98,7 +98,12 @@ const HomeStackScreen = ({navigation}) => (
             fontWeight: 'bold'
             }
         }}>
-            <HomeStack.Screen name="Home" component={Home}  options={{ headerShown: false }}/>
+            <HomeStack.Screen name="Home" component={Home}  options={{
+        title:'Home',
+        headerLeft: () => (
+            <Icon.Button name="ios-menu" size={25} backgroundColor="#36455A" onPress={() => navigation.openDrawer()}></Icon.Button>
+        )
+        }} />
     </HomeStack.Navigator>
     );
 
