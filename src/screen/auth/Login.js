@@ -1,18 +1,50 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, AsyncStorage, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Colors from '../../Styles/Colors'
 import bGStyles from '../../Styles/Background'
 import { useNavigation } from '@react-navigation/native'
+import client from '../../apiRouter/client'
+import { useLogin } from '../../context/LoginProvider'
+
 
 const Login = () => {
+    const { setIsLoggedIn , setToken} = useLogin();
     const [email, setEmail] = useState('')
-    const [Password, setPasword] = useState('')
+    const [password, setPasword] = useState('')
     const Navigator = useNavigation();
 
     const navigateRegister = () => {
         Navigator.navigate('Register')
     }
+
+
+    const login = async (e) => {
+        e.preventDefault();
+        if (!email || !password) {
+            Alert.alert(
+                'Error',)
+        } else {
+            try {
+                const res = await client.post('api/user/signing', { email, password })
+                // await AsyncStorage.setItem(
+                //     'IsLogging', true)
+                // await AsyncStorage.setItem(
+                //     '_token', res.data.token)
+
+                setIsLoggedIn(true)
+                setToken(res.data.token)
+                Navigator.navigate('Main');
+
+            } catch (error) {
+                console.log("🚀 ~ file: Login.js ~ line 27 ~ login ~ error", error)
+                Alert.alert(
+                    error.response.data.message,)
+            }
+        }
+
+    }
+
     return (
         <LinearGradient
             // Background Linear Gradient
@@ -39,7 +71,7 @@ const Login = () => {
                                 <TextInput onChangeText={setPasword} style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
                             </View>
                             <View style={styles.formInput}>
-                                <TouchableOpacity style={styles.defaultButton}>
+                                <TouchableOpacity onPress={login} style={styles.defaultButton}>
                                     <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Login</Text>
                                 </TouchableOpacity>
                             </View>
