@@ -2,21 +2,27 @@ import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Image, View } from 'react-native'
+import { useLogin } from '../../context/LoginProvider'
 import bGStyles from '../../Styles/Background'
 import Colors from '../../Styles/Colors'
 
 const Splash = () => {
+    const { isLoggedIn} = useLogin();
     const [isGo, setisGo] = React.useState(true)
     const navigation = useNavigation();
 
     React.useEffect(() => {
         if (isGo) {
             setTimeout(() => {
-                navigation.navigate('Login');
+                if (isLoggedIn) {
+                    navigation.navigate('Main');
+                }else{
+                    navigation.navigate('Login');
+                }
                 setisGo(false)
             }, 2000)
         }
-    }, [isGo])
+    }, [isGo,isLoggedIn])
     return (
         <LinearGradient
             // Background Linear Gradient
