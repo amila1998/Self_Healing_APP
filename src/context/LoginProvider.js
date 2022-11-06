@@ -11,7 +11,7 @@ const LoginProvider = ({ children }) => {
     const [token, setToken] = useState(false);
 
     const [profile, setProfile] = useState({});
-    console.log("🚀 ~ file: LoginProvider.js ~ line 14 ~ LoginProvider ~ profile", profile)
+
 
 
 
@@ -28,8 +28,7 @@ const LoginProvider = ({ children }) => {
                             const res = await client.get('/api/auth/infor',{
                                 headers: { Authorization: token }
                             })
-                            console.log("🚀 ~ file: LoginProvider.js ~ line 31 ~ getUserDetails ~ res", res)
-                            //setProfile(res.data)
+                            setProfile(res.data)
                         } else {
                             await client.post('/api/auth/logout')
                             setToken(false)
