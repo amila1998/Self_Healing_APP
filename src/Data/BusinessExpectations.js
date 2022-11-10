@@ -1,8 +1,8 @@
 const BusinessExpectations = [
-    {key:'looking_advisors',value:'Looking Advisors'},
-    {key:'looking_investors',value:'Looking Investors'},
-    {key:'sell_products',value:'Sell Products'},
-    {key:'looking_donetors',value:'Looking Donetors'},
+    {id:'looking_advisors',name:'Looking Advisors'},
+    {id:'looking_investors',name:'Looking Investors'},
+    {id:'sell_products',name:'Sell Products'},
+    {id:'looking_donetors',name:'Looking Donetors'},
 ]
 
 export default BusinessExpectations
