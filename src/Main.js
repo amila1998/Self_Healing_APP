@@ -11,8 +11,7 @@ const Main = () => {
     const { isLoggedIn, token, profile } = useLogin();
     return (
         <>
-        <Reviews/>
-            {/* <RootStackScreen /> */}
+            <RootStackScreen />
           
 
         </>
