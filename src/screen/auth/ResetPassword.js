@@ -1,44 +1,27 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { Alert, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, AsyncStorage, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Colors from '../../Styles/Colors'
 import bGStyles from '../../Styles/Background'
 import { useNavigation } from '@react-navigation/native'
 import client from '../../apiRouter/client'
-import { useLogin } from '../../context/LoginProvider'
 
 
-const Login = () => {
-    const { setIsLoggedIn , setToken} = useLogin();
-    const [email, setEmail] = useState('')
-    const [password, setPasword] = useState('')
-    const Navigator = useNavigation();
-
-    const navigateRegister = () => {
-        Navigator.navigate('Register')
-    }
-
-    const navigateForgotPassword = () => {
-        Navigator.navigate('Forgot')
-    }
+function ResetPassword() {
+    const [password, setPassword] = React.useState('')
+    const [cPassword, setCPassword] = React.useState('')
 
 
-    const login = async (e) => {
+    const resetPassword = async (e) => {
         e.preventDefault();
-        if (!email || !password) {
+        if (!password || !cPassword) {
             Alert.alert(
                 'Fill All the Fields !',)
         } else {
             try {
-                const res = await client.post('api/user/signing', { email, password })
-                // await AsyncStorage.setItem(
-                //     'IsLogging', true)
-                // await AsyncStorage.setItem(
-                //     '_token', res.data.token)
+                // const res = await client.post('api/user/resetPassword', { password , cPassword })
 
-                setIsLoggedIn(true)
-                setToken(res.data.token)
-                Navigator.navigate('Main');
+                Navigator.navigate('Login');
 
             } catch (error) {
                 console.log("🚀 ~ file: Login.js ~ line 27 ~ login ~ error", error)
@@ -68,25 +51,17 @@ const Login = () => {
                             <Image resizeMode={'contain'} source={require('../../../assets/STAYWITHNOPOVERTY.png')} />
                         </View>
                         <View style={styles.loginBody}>
+                            <View style={{ marginTop: 25 }} />
+
                             <View style={styles.formInput}>
-                                <TextInput keyboardType='email-address' onChangeText={setEmail} style={styles.textInput} placeholder='Email'></TextInput>
+                                <TextInput onChangeText={setPassword} style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
                             </View>
                             <View style={styles.formInput}>
-                                <TextInput onChangeText={setPasword} style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
+                                <TextInput onChangeText={setCPassword} style={styles.textInput} placeholder='Conform Password' secureTextEntry={true}></TextInput>
                             </View>
                             <View style={styles.formInput}>
-                                <TouchableOpacity onPress={login} style={styles.defaultButton}>
-                                    <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Login</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.formInput}>
-                                <TouchableOpacity onPress={navigateForgotPassword}>
-                                    <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Forgot Password</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.formInput}>
-                                <TouchableOpacity onPress={navigateRegister}>
-                                    <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold' }}>Need Account ? Register Now</Text>
+                                <TouchableOpacity onPress={resetPassword} style={styles.defaultButton}>
+                                    <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Reset Password </Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -94,9 +69,10 @@ const Login = () => {
                 </ScrollView>
             </SafeAreaView>
         </LinearGradient>
-
     )
 }
+
+export default ResetPassword
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -120,10 +96,11 @@ const styles = StyleSheet.create({
     },
     textInput: {
         padding: 10,
+        paddingStart: 20,
         fontSize: 16,
         borderWidth: 1,
         borderColor: '#10006b',
-        color: '#10006b',
+        color: '#000',
         borderRadius: 50,
         backgroundColor: '#fff'
     },
@@ -135,5 +112,3 @@ const styles = StyleSheet.create({
 
 
 })
-
-export default Login
