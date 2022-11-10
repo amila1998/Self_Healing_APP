@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { AsyncStorage } from 'react-native';
+//import { AsyncStorage } from 'react-native';
 import client from '../apiRouter/client';
 
 
@@ -33,16 +33,16 @@ const LoginProvider = ({ children }) => {
                             await client.post('/api/auth/logout')
                             setToken(false)
                             setIsLoggedIn(false)
-                            await AsyncStorage.removeItem('IsLogging')
-                            await AsyncStorage.removeItem('_token')
+                            //await AsyncStorage.removeItem('IsLogging')
+                            //await AsyncStorage.removeItem('_token')
                         }
 
                     } else {
                         await client.post('/api/auth/logout')
                         setToken(false)
                         setIsLoggedIn(false)
-                        await AsyncStorage.removeItem('IsLogging')
-                        await AsyncStorage.removeItem('_token')
+                        //await AsyncStorage.removeItem('IsLogging')
+                        //await AsyncStorage.removeItem('_token')
                     }
             //     } else {
             //         await client.post('/api/auth/logout')
