@@ -14,7 +14,7 @@ const Profile = () => {
         >
             <SafeAreaView style={styles.mainContainer}>
                 <View>
-                    <Text>Profile</Text>
+                    <Text> Profile</Text>
                 </View>
             </SafeAreaView>
         </LinearGradient>
