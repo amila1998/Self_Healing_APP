@@ -4,8 +4,10 @@ import React from 'react'
 import { StyleSheet, Text, View, Button, SafeAreaView, ScrollViewComponent, ScrollView, Image, TouchableOpacity } from 'react-native';
 import bGStyles from '../Styles/Background';
 import Colors from '../Styles/Colors'
+import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
+    const Navigator = useNavigation();
     return (
         <LinearGradient
             // Background Linear Gradient
@@ -35,7 +37,7 @@ const Home = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ justifyContent: 'center', margin: 15 }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={()=>Navigator.navigate('Businesses')}>
                                     <Image source={require('../../assets/homeIcons/business.png')} />
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Businesses</Text>
                                 </TouchableOpacity>

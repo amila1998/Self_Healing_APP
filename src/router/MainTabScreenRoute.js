@@ -12,6 +12,7 @@ import Colors from '../Styles/Colors';
 import Shop from '../screen/Shop';
 import MyWorks from '../screen/MyWorks';
 import Notifications from '../screen/Notifications';
+import Businesses from '../screen/businesses/Businesses';
 
 // import HomeScreen from './HomeScreen';
 // import DetailsScreen from './DetailsScreen';
@@ -101,6 +102,10 @@ const HomeStackScreen = ({navigation}) => (
             <HomeStack.Screen name="Home2" component={Home}  options={{
         title:'Home',
         headerShown: false
+        }} />
+        <HomeStack.Screen name="Businesses" component={Businesses}  options={{
+        title:'Businesses',
+        headerShown: true
         }} />
     </HomeStack.Navigator>
     );
