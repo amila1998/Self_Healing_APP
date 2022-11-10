@@ -1,9 +1,9 @@
 import React from 'react'
 
-const addNewBusiness = () => {
+const AddNewBusiness = () => {
   return (
     <></>
   )
 }
 
-export default addNewBusiness
+export default AddNewBusiness

@@ -4,9 +4,10 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { useLogin } from '../../context/LoginProvider'
 import bGStyles from '../../Styles/Background'
 import Colors from '../../Styles/Colors'
-
+import { useNavigation } from '@react-navigation/native'
 const MyBusinesses = () => {
     const { token } = useLogin();
+    const Navigator = useNavigation();
     return (
         <LinearGradient
             // Background Linear Gradient
@@ -17,7 +18,7 @@ const MyBusinesses = () => {
                 <View style={{ flex: 1, }}>
                     <View style={{ flexDirection: 'row', padding: 5, justifyContent: 'flex-end' , marginRight:10 }}>
                         <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                            <TouchableOpacity style={{ flexDirection: 'row' , backgroundColor:'#FF6D27', padding:10, borderRadius:50}} >
+                            <TouchableOpacity onPress={()=>Navigator.navigate('AddNewBusiness')} style={{ flexDirection: 'row' , backgroundColor:'#FF6D27', padding:10, borderRadius:50}} >
                                 <Text style={{ color: '#fff', fontSize: 16 }}>Add New Business</Text>
                             </TouchableOpacity></View>
                     </View>
