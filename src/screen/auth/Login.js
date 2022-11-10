@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { Alert, AsyncStorage, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Colors from '../../Styles/Colors'
 import bGStyles from '../../Styles/Background'
 import { useNavigation } from '@react-navigation/native'
@@ -65,7 +65,7 @@ const Login = () => {
                         </View>
                         <View style={styles.loginBody}>
                             <View style={styles.formInput}>
-                                <TextInput onChangeText={setEmail} style={styles.textInput} placeholder='Email'></TextInput>
+                                <TextInput keyboardType='email-address' onChangeText={setEmail} style={styles.textInput} placeholder='Email'></TextInput>
                             </View>
                             <View style={styles.formInput}>
                                 <TextInput onChangeText={setPasword} style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
