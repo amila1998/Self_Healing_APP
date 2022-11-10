@@ -11,6 +11,7 @@ const LoginProvider = ({ children }) => {
     const [token, setToken] = useState(false);
 
     const [profile, setProfile] = useState({});
+    console.log("🚀 ~ file: LoginProvider.js ~ line 14 ~ LoginProvider ~ profile", profile)
 
 
 

@@ -20,6 +20,7 @@ import Businesses from '../screen/businesses/Businesses';
 // import ProfileScreen from './ProfileScreen';
 
 const HomeStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
@@ -42,7 +43,7 @@ const MainTabScreen = () => (
       />
        <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileStackScreen}
         options={{
           tabBarLabel: 'Profile',
           tabBarColor: '#36455A',
@@ -109,6 +110,27 @@ const HomeStackScreen = ({navigation}) => (
         }} />
     </HomeStack.Navigator>
     );
+
+    const ProfileStackScreen = ({navigation}) => (
+      <ProfileStack.Navigator screenOptions={{
+              headerStyle: {
+              backgroundColor: '#36455A',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+              fontWeight: 'bold'
+              }
+          }}>
+              <ProfileStack.Screen name="Profile2" component={Profile}  options={{
+          title:'Profile',
+          headerShown: false
+          }} />
+          {/* <ProfileStack.Screen name="Businesses" component={Businesses}  options={{
+          title:'Businesses',
+          headerShown: true
+          }} /> */}
+      </ProfileStack.Navigator>
+      );
 
 export default MainTabScreen;
 
