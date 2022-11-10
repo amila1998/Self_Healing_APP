@@ -13,6 +13,7 @@ import Shop from '../screen/Shop';
 import MyWorks from '../screen/MyWorks';
 import Notifications from '../screen/Notifications';
 import Businesses from '../screen/businesses/Businesses';
+import MyBusinesses from '../screen/businesses/MyBusinesses';
 
 // import HomeScreen from './HomeScreen';
 // import DetailsScreen from './DetailsScreen';
@@ -125,10 +126,10 @@ const HomeStackScreen = ({navigation}) => (
           title:'Profile',
           headerShown: false
           }} />
-          {/* <ProfileStack.Screen name="Businesses" component={Businesses}  options={{
-          title:'Businesses',
+          <ProfileStack.Screen name="MyBusinesses" component={MyBusinesses}  options={{
+          title:'My Businesses',
           headerShown: true
-          }} /> */}
+          }} />
       </ProfileStack.Navigator>
       );
 
