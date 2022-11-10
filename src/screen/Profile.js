@@ -6,9 +6,20 @@ import { useLogin } from '../context/LoginProvider';
 import bGStyles from '../Styles/Background';
 import Colors from '../Styles/Colors'
 import { useNavigation } from '@react-navigation/native'
+import client from '../apiRouter/client';
 const Profile = () => {
     const { profile } = useLogin();
     const Navigator = useNavigation();
+
+    const logout =async()=>{
+        try {
+            await client.post('/api/auth/logout')
+            Navigator.navigate('Login')
+        } catch (error) {
+            console.log("🚀 ~ file: Profile.js ~ line 17 ~ logout ~ error", error)
+            
+        }
+    }
     return (
         <LinearGradient
             // Background Linear Gradient
@@ -111,7 +122,7 @@ const Profile = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ justifyContent: 'center', margin: 15 }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={logout}>
                                     <Image source={require('../../assets/profileIcons/Signout.png')} style={{ width:110 ,height:110}}/>
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Sign Out</Text>
                                 </TouchableOpacity>
