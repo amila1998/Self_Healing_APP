@@ -22,7 +22,7 @@ const MyBusinesses = () => {
                                 <Text style={{ color: '#fff', fontSize: 16 }}>Add New Business</Text>
                             </TouchableOpacity></View>
                     </View>
-                    <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', padding: 10 }}>
+                    <View style={{ marginTop: 20, padding: 10 }}>
                         <ScrollView>
                             <SafeAreaView style={{ marginBottom: 30 }}>
                                 <View style={[styles.card, styles.elevation]}>

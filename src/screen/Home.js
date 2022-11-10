@@ -1,6 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react'
-
 import { StyleSheet, Text, View, Button, SafeAreaView, ScrollViewComponent, ScrollView, Image, TouchableOpacity } from 'react-native';
 import bGStyles from '../Styles/Background';
 import Colors from '../Styles/Colors'
