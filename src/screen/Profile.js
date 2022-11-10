@@ -5,9 +5,10 @@ import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, TouchableOpac
 import { useLogin } from '../context/LoginProvider';
 import bGStyles from '../Styles/Background';
 import Colors from '../Styles/Colors'
-
+import { useNavigation } from '@react-navigation/native'
 const Profile = () => {
     const { profile } = useLogin();
+    const Navigator = useNavigation();
     return (
         <LinearGradient
             // Background Linear Gradient
@@ -16,7 +17,7 @@ const Profile = () => {
         >
             <SafeAreaView style={{ marginTop: 20, flex: 1, }}>
                 <View style={{ flex: 1, }}>
-                    <View style={{ padding: 10, flexDirection: 'row' , elevation: 20, shadowColor: '#000',}}>
+                    <View style={{ padding: 10, flexDirection: 'row' , elevation: 20, shadowColor: '#000',backgroundColor:'none'}}>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={require('../../assets/profileIcons/user-circle_xkddog.png')} style={{ width: 100, height: 100, }} />
                         </View>
@@ -59,7 +60,7 @@ const Profile = () => {
                             </View>
                         </View>
                     </View>
-                    <View>
+                    <View style={{height: 1, width:'100%', backgroundColor: '#36455A'}}>
 
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}>
@@ -68,7 +69,7 @@ const Profile = () => {
                             <View style={{ flex: 1 , margin:20}}>
                         <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
                             <View style={{ justifyContent: 'center', margin: 15 }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={()=>Navigator.navigate('MyBusinesses')}>
                                     <Image source={require('../../assets/profileIcons/MyBusinesses.png')} style={{ width:110 ,height:110}}/>
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>My Businesses</Text>
                                 </TouchableOpacity>
