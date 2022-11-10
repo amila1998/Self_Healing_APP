@@ -12,6 +12,8 @@ import Colors from '../Styles/Colors';
 import Shop from '../screen/Shop';
 import MyWorks from '../screen/MyWorks';
 import Notifications from '../screen/Notifications';
+import Businesses from '../screen/businesses/Businesses';
+import MyBusinesses from '../screen/businesses/MyBusinesses';
 
 // import HomeScreen from './HomeScreen';
 // import DetailsScreen from './DetailsScreen';
@@ -19,6 +21,7 @@ import Notifications from '../screen/Notifications';
 // import ProfileScreen from './ProfileScreen';
 
 const HomeStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
@@ -41,7 +44,7 @@ const MainTabScreen = () => (
       />
        <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileStackScreen}
         options={{
           tabBarLabel: 'Profile',
           tabBarColor: '#36455A',
@@ -100,12 +103,35 @@ const HomeStackScreen = ({navigation}) => (
         }}>
             <HomeStack.Screen name="Home2" component={Home}  options={{
         title:'Home',
-        headerLeft: () => (
-            <Icon.Button name="ios-menu" size={25} backgroundColor="#36455A" onPress={() => navigation.openDrawer()}></Icon.Button>
-        )
+        headerShown: false
+        }} />
+        <HomeStack.Screen name="Businesses" component={Businesses}  options={{
+        title:'Businesses',
+        headerShown: true
         }} />
     </HomeStack.Navigator>
     );
+
+    const ProfileStackScreen = ({navigation}) => (
+      <ProfileStack.Navigator screenOptions={{
+              headerStyle: {
+              backgroundColor: '#36455A',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+              fontWeight: 'bold'
+              }
+          }}>
+              <ProfileStack.Screen name="Profile2" component={Profile}  options={{
+          title:'Profile',
+          headerShown: false
+          }} />
+          <ProfileStack.Screen name="MyBusinesses" component={MyBusinesses}  options={{
+          title:'My Businesses',
+          headerShown: true
+          }} />
+      </ProfileStack.Navigator>
+      );
 
 export default MainTabScreen;
 
