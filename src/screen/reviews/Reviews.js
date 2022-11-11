@@ -8,11 +8,11 @@ import { useNavigation } from '@react-navigation/native';
 import { useLogin } from '../../context/LoginProvider';
 
 function Reviews({ navigation, route }) {
-    const { productID , productImage , productName } = route.params;
+    const { productID, productImage, productName } = route.params;
     const { profile } = useLogin();
     const [reviews, setReviews] = useState([]);
     const [userID, setUserID] = useState(profile._id);
-    const [callback , setCallBack] = useState(true)
+    const [callback, setCallBack] = useState(true)
     // const navigation = useNavigation();
 
     useEffect(() => {
@@ -28,9 +28,9 @@ function Reviews({ navigation, route }) {
         }
         if (callback) {
             getAllReviewsProductWise()
-          }
-        
-    }, [callback ,  productID])
+        }
+
+    }, [callback, productID])
 
     const deleteReview = async (id) => {
         try {
@@ -38,7 +38,7 @@ function Reviews({ navigation, route }) {
             alert(res.data.message)
             const res1 = await client.get(`/api/review/getAllReviewsProductWise/${route.params.productID}`)
             setReviews(res1.data.reviews)
-            navigation.navigate('Reviews' , {productID : productID , productImage : productImage , productName : productName })
+            navigation.navigate('Reviews', { productID: productID, productImage: productImage, productName: productName })
 
 
         } catch (error) {
@@ -66,7 +66,7 @@ function Reviews({ navigation, route }) {
                         </View>
 
                         <View >
-                            <TouchableOpacity onPress={() => { navigation.navigate('AddReview' , {productID : productID , productImage : productImage , productName : productName})}}>
+                            <TouchableOpacity onPress={() => { navigation.navigate('AddReview', { productID: productID, productImage: productImage, productName: productName }) }}>
                                 <View style={styles.addReviewBtn} >
                                     <View >
                                         <Image style={styles.addIcon} resizeMode={'contain'} source={require('../../../assets/addReview.png')} />
@@ -90,7 +90,7 @@ function Reviews({ navigation, route }) {
                         </View>
 
                         <View>
-                            {reviews && reviews.map((reviews ,index ) => {
+                            {reviews && reviews.map((reviews, index) => {
                                 return (
                                     <View key={index} style={styles.reviewsContainer}>
                                         <Text style={styles.reviewUserName}>{reviews.first_name}{" "}{reviews.last_name}{reviews.userID === userID ? (<Text>{"(You)"}</Text>) : (<Text></Text>)}</Text>
@@ -103,7 +103,7 @@ function Reviews({ navigation, route }) {
                                                         <View >
                                                             <Text style={[styles.reviewEdit, { fontSize: 16, color: '#FF3347', fontWeight: 'bold' }]} onPress={() => {
                                                                 navigation.navigate('EditReview', {
-                                                                    reviewID : reviews._id ,  productID: reviews.productID, title: reviews.title , description: reviews.description, recommendation: reviews.recommendation
+                                                                    reviewID: reviews._id, productID: productID
                                                                 })
                                                             }}>Edit</Text>
                                                         </View>
