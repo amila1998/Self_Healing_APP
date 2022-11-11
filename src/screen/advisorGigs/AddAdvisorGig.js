@@ -7,13 +7,17 @@ import { ScrollView } from 'react-native-gesture-handler';
 import bGStyles from '../../Styles/Background';
 import Colors from '../../Styles/Colors'
 import { useNavigation } from '@react-navigation/native'
+import client from '../../apiRouter/client'
+import { useLogin } from '../../context/LoginProvider';
 
 
 const AddAdvisorGig = () => {
-    const [userID, setUserID] = useState('12345');
-    const [name, setName] = useState('amila');
-    const [description, setDescription] = useState('amila');
-    console.log("🚀 ~ file: AddAdvisorGig.js ~ line 15 ~ AddAdvisorGig ~ description", description)
+    const { profile } = useLogin();
+    const [userID, setUserID] = useState(profile._id);
+    const [name, setName] = useState(profile.first_name);
+   const [description, setDescription] = useState('amila');
+   console.log("🚀 ~ file: Addgig.js ~ line 18 ~ Addgig ~ description", description)
+   
 
     const Navigator = useNavigation();
 
@@ -21,12 +25,12 @@ const AddAdvisorGig = () => {
     const addPost = async (e) => {
         e.preventDefault();
         if (description === "") {
-            alert("You are not add post");
+            alert("You are not add requst");
         } else {
             try {
-                const res = await axios.post("http://192.168.8.167:8000/api/advisorGig/add",{userID,name,description});
+                const res = await client.post("/api/advisorGig/add",{userID,name,description});
                 console.log(res)
-                alert(res.data.message);
+                alert(res.data.msg);
             } catch (err) {
                 console.log(err);
             }
@@ -55,7 +59,7 @@ const AddAdvisorGig = () => {
 
                         </View>
                         <View style={{ flex: 2, backgroundColor: "rgba(255, 255, 255, 0.5)", alignItems: 'center', borderRadius: 10 }}>
-                            <Text>udayantha</Text>
+                            <Text>{profile.first_name}</Text>
                         </View>
 
 
@@ -71,7 +75,7 @@ const AddAdvisorGig = () => {
 
                             </View>
                             <View style={{ flex: 2, backgroundColor: "" }}>
-                                <TextInput  name="description"  style={styles.textInput} onChangeText={setDescription} placeholder='Enter your request'></TextInput>
+                                <TextInput  name="description"  style={styles.textInput} onChangeText={setDescription} placeholder='Enter your request..'></TextInput>
                             </View>
 
                         </View>
@@ -89,7 +93,7 @@ const AddAdvisorGig = () => {
 
                             <View style={{ flex: 2, backgroundColor: "", alignItems: 'center' }}>
                                 <TouchableOpacity onPress={addPost}>
-                                    <Text style={{ color: '#fcbb08' }}>Add Request</Text>
+                                    <Text style={{ color: '#fcbb08' }}>Publish</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: 1, backgroundColor: "", alignItems: 'center' }}>
