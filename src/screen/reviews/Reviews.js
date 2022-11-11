@@ -1,6 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import client from '../../apiRouter/client'
 import { StyleSheet, Text, View, Image, Button, Dimensions, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import bGStyles from '../../Styles/Background';
@@ -8,32 +7,38 @@ import Colors from '../../Styles/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { useLogin } from '../../context/LoginProvider';
 
-function Reviews({navigation}) {
+function Reviews({ navigation, route }) {
+    const { productID, productImage, productName } = route.params;
     const { profile } = useLogin();
     const [reviews, setReviews] = useState([]);
     const [userID, setUserID] = useState(profile._id);
+    const [callback, setCallBack] = useState(true)
     // const navigation = useNavigation();
 
     useEffect(() => {
         const getAllReviewsProductWise = async () => {
             try {
-                const res = await client.get('/api/review/getAllReviewsProductWise/74657465465456765ytuyt65755')
+                const res = await client.get(`/api/review/getAllReviewsProductWise/${route.params.productID}`)
                 setReviews(res.data.reviews)
+                setCallBack(false);
             } catch (error) {
                 console.log("🚀 ~ file: ViewSearchedRoutes.js ~ line 19 ~ getAllBusShedules ~ error", error)
 
             }
         }
-        getAllReviewsProductWise()
-    }, [])
+        if (callback) {
+            getAllReviewsProductWise()
+        }
+
+    }, [callback, productID])
 
     const deleteReview = async (id) => {
         try {
             const res = await client.delete(`/api/review/deleteReview/${id}`)
             alert(res.data.message)
-            const res1 = await client.get('/api/review/getAllReviewsProductWise/74657465465456765ytuyt65755')
+            const res1 = await client.get(`/api/review/getAllReviewsProductWise/${route.params.productID}`)
             setReviews(res1.data.reviews)
-            navigation.navigate('Reviews')
+            navigation.navigate('Reviews', { productID: productID, productImage: productImage, productName: productName })
 
 
         } catch (error) {
@@ -61,7 +66,7 @@ function Reviews({navigation}) {
                         </View>
 
                         <View >
-                            <TouchableOpacity onPress={() => { navigation.navigate('AddReview')}}>
+                            <TouchableOpacity onPress={() => { navigation.navigate('AddReview', { productID: productID, productImage: productImage, productName: productName }) }}>
                                 <View style={styles.addReviewBtn} >
                                     <View >
                                         <Image style={styles.addIcon} resizeMode={'contain'} source={require('../../../assets/addReview.png')} />
@@ -85,7 +90,7 @@ function Reviews({navigation}) {
                         </View>
 
                         <View>
-                            {reviews && reviews.map((reviews ,index ) => {
+                            {reviews && reviews.map((reviews, index) => {
                                 return (
                                     <View key={index} style={styles.reviewsContainer}>
                                         <Text style={styles.reviewUserName}>{reviews.first_name}{" "}{reviews.last_name}{reviews.userID === userID ? (<Text>{"(You)"}</Text>) : (<Text></Text>)}</Text>
@@ -98,7 +103,7 @@ function Reviews({navigation}) {
                                                         <View >
                                                             <Text style={[styles.reviewEdit, { fontSize: 16, color: '#FF3347', fontWeight: 'bold' }]} onPress={() => {
                                                                 navigation.navigate('EditReview', {
-                                                                    reviewID : reviews._id ,  productID: reviews.productID, title: reviews.title , description: reviews.description, recommendation: reviews.recommendation
+                                                                    reviewID: reviews._id, productID: productID
                                                                 })
                                                             }}>Edit</Text>
                                                         </View>

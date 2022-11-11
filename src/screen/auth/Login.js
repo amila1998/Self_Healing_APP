@@ -1,17 +1,18 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { Alert, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Colors from '../../Styles/Colors'
 import bGStyles from '../../Styles/Background'
 import { useNavigation } from '@react-navigation/native'
 import client from '../../apiRouter/client'
 import { useLogin } from '../../context/LoginProvider'
-
+// import PasswordInputText from 'react-native-hide-show-password-input';
 
 const Login = () => {
-    const { setIsLoggedIn , setToken} = useLogin();
+    const { setIsLoggedIn, setToken } = useLogin();
     const [email, setEmail] = useState('')
     const [password, setPasword] = useState('')
+    const [showPassword, setshowPassword] = useState(true)
     const Navigator = useNavigation();
 
     const navigateRegister = () => {
@@ -21,6 +22,10 @@ const Login = () => {
     const navigateForgotPassword = () => {
         Navigator.navigate('Forgot')
     }
+
+    const toggleSwitch=()=> {
+        setshowPassword(!showPassword);
+      }
 
 
     const login = async (e) => {
@@ -72,7 +77,15 @@ const Login = () => {
                                 <TextInput keyboardType='email-address' onChangeText={setEmail} style={styles.textInput} placeholder='Email'></TextInput>
                             </View>
                             <View style={styles.formInput}>
-                                <TextInput onChangeText={setPasword} style={styles.textInput} placeholder='Password' secureTextEntry={true}></TextInput>
+                                <TextInput onChangeText={setPasword} style={styles.textInput} placeholder='Password' secureTextEntry={!showPassword?false:true}></TextInput>
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <Switch
+                                    onValueChange={toggleSwitch}
+                                    value={!showPassword}
+                                />
+                                 <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Show Password</Text>
+                                </View>
+                               
                             </View>
                             <View style={styles.formInput}>
                                 <TouchableOpacity onPress={login} style={styles.defaultButton}>

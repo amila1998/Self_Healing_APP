@@ -12,6 +12,7 @@ import AddReview from "../screen/reviews/AddReview";
 import EditReview from "../screen/reviews/EditReview";
 import Product from "../screen/product/Product";
 import Reviews from "../screen/reviews/Reviews";
+import Buy from "../screen/product/Buy";
 const Stack = createNativeStackNavigator();
 
 
@@ -25,10 +26,11 @@ const RootStackScreen = () => {
                 <Stack.Screen options={{ headerShown: false }} name="Main" component={MainTabScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="Forgot" component={Forgot} />
                 <Stack.Screen options={{ headerShown: false }} name="ResetPassword" component={ResetPassword} />
-                <Stack.Screen options={{ headerShown: false }} name="AddReview" component={AddReview} />
-                <Stack.Screen options={{ headerShown: false }} name="EditReview" component={EditReview} />
-                <Stack.Screen options={{ headerShown: false }} name="Reviews" component={Reviews} />
-                <Stack.Screen options={{ headerShown: false }} name="Product" component={Product} />
+                <Stack.Screen options={{ headerShown: true }} name="AddReview" component={AddReview} />
+                <Stack.Screen options={{ headerShown: true }} name="EditReview" component={EditReview} />
+                <Stack.Screen options={{ headerShown: true }} name="Reviews" component={Reviews} />
+                <Stack.Screen options={{ headerShown: true }} name="Product" component={Product} />
+                <Stack.Screen options={{ headerShown: true }} name="Buy" component={Buy} />
             </Stack.Navigator>
    
     )
