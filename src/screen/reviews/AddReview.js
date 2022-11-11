@@ -9,11 +9,12 @@ import Colors from '../../Styles/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { useLogin } from '../../context/LoginProvider';
 
-function AddReview({navigation}) {
+function AddReview({navigation , route}) {
+    const { productID , productImage , productName } = route.params;
+    const [productCategory , setProductCategory] = useState('');
     const { profile } = useLogin();
     const [recommendation, setRecommendation] = useState(null); //will store our current user options
     const [userID , setUserID] = useState(profile._id);
-    const [productID , setProductID] = useState('74657465465456765ytuyt65755');
     const [first_name , setFirst_name] = useState(profile.first_name);
     const [last_name , setLast_name] = useState(profile.last_name);
     const [title , setTitle] = useState('');
@@ -22,6 +23,23 @@ function AddReview({navigation}) {
         { label: 'Yes', value: 'Yes' },
         { label: 'No', value: 'No' },
     ]; //create our options for radio group
+
+    useEffect(() => {
+        const getAProduct = async () => {
+            try {
+                const res = await client.get(`/api/product/getAProduct/${productID}`)
+                setProductCategory(res.data.product.productCategory);
+                //setCallBack(false)
+            } catch (error) {
+                console.log("🚀 ~ file: Product.js ~ line 22 ~ getAProduct ~ error", error)
+            }
+        }
+        getAProduct()
+        // if (callback) {
+        //     getAProduct()
+        // }
+
+    }, [productID])
 
     const addReviewHandler = async (e) => {
         e.preventDefault();
@@ -32,7 +50,7 @@ function AddReview({navigation}) {
                 const res = await client.post("/api/review/addReview",{productID , userID , first_name , last_name , title , description , recommendation });
                 console.log(res.data);
                 alert(res.data.message);
-                navigation.navigate('Reviews');
+                navigation.navigate('Reviews' , {productID : productID , productImage :productImage , productName : productName });
 
             } catch (err) {
                 console.log("🚀 ~ file: AddReview.js ~ line 39 ~ addReviewHandler ~ err", err.message)
@@ -53,11 +71,11 @@ function AddReview({navigation}) {
                     <View>
                         <View style={styles.productContainer} >
                             <View >
-                                <Image style={styles.productImageContainer} resizeMode={'contain'} source={require('../../../assets/triple-chocolate-cake-4.jpg')} />
+                                <Image style={styles.productImageContainer} resizeMode={'contain'} source={{ uri: `${productImage}` }} />
                             </View>
                             <View>
-                                <Text style={styles.productCategoryContainer}> Cake</Text>
-                                <Text style={styles.productNameContainer}> Chocolate Cake</Text>
+                                <Text style={styles.productCategoryContainer}> {productCategory}</Text>
+                                <Text style={styles.productNameContainer}> {productName}</Text>
                             </View>
                         </View>
 

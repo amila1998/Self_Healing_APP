@@ -7,10 +7,11 @@ import { useNavigation } from '@react-navigation/native'
 import Colors from '../../Styles/Colors'
 import bGStyles from '../../Styles/Background'
 
-const BusinessDetails = ({ route }) => {
+const BusinessDetails = ({ navigation, route }) => {
   const { BID } = route.params
   const [businessDetails, setBusinessDetails] = useState('')
   console.log("🚀 ~ file: BusinessDetails.js ~ line 8 ~ BusinessDetails ~ businessDetails", businessDetails)
+  const [products, setProducts] = useState([]);
   const { callback, setCallBack } = useLogin()
 
   const [sDescription, setSDescription] = useState(true)
@@ -25,6 +26,8 @@ const BusinessDetails = ({ route }) => {
       try {
         const res = await client.get(`/api/business/viewByID/${BID}`)
         setBusinessDetails(res.data)
+        const res1 = await client.get(`/api/product/getAllProductsBusinessWise/${BID}`)
+        setProducts(res1.data.products);
         setCallBack(false)
       } catch (error) {
         console.log("🚀 ~ file: BusinessDetails.js ~ line 14 ~ getBusinessDetails ~ error", error)
@@ -36,7 +39,6 @@ const BusinessDetails = ({ route }) => {
     }
 
   }, [callback, BID])
-
 
 
   return (
@@ -204,7 +206,33 @@ const BusinessDetails = ({ route }) => {
             {
               sProducts && <>
                 <View style={{ backgroundColor: '#fff', padding: 10, marginTop: 5 }}>
+                  <View>
+                    {products && products.map((product, index) => {
+                      return (
+                        <View key={index}>
+                          <TouchableOpacity onPress={() => { navigation.navigate('Product' , {productID : product._id}) }}>
+                            <View style={styles.productContainer} >
+                              <View >
+                                <Image style={styles.productImageContainer} resizeMode={'contain'} source={{ uri: `${product.productImage}` }}  />
+                              </View>
+                              <View>
+                                <Text style={styles.productCategoryContainer}> {product.productName}</Text>
+                                <Text style={styles.productNameContainer}> Rs .{product.productPrice}</Text>
+                              </View>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                        // <View key={index} >
+                        //   <
+                        //   <Image style={styles.productImageContainer} resizeMode={'contain'} />
+                        //   <Text></Text>
+                        // </View>
+                      )
+                    }
+                    )
+                    }
 
+                  </View>
                 </View></>
             }
             {
@@ -318,6 +346,36 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowColor: '#000',
   },
+  productContainer: {
+    flex: 1,
+    width: 310,
+    height: 119,
+    left: 10,
+    marginTop: 10,
+    marginBottom : 10 ,
+    borderRadius: 15,
+    backgroundColor: '#D9D9D9'
+},
+productImageContainer: {
+    width: 89,
+    height: 88,
+    borderRadius: 15,
+    position: "absolute",
+    left: 30,
+    top: 16,
+},
+productCategoryContainer: {
+    position: "absolute",
+    left: 140,
+    top: 30,
+},
+productNameContainer: {
+    position: "absolute",
+    left: 140,
+    top: 60,
+    fontSize: 16,
+    fontWeight: "500"
+},
 
 })
 
