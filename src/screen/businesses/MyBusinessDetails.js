@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 import client from '../../apiRouter/client'
 import { useLogin } from '../../context/LoginProvider'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Colors from '../../Styles/Colors'
 import bGStyles from '../../Styles/Background'
 
-const MyBusinessDetails = ({route}) => {
+const MyBusinessDetails = ({ route }) => {
   const { BID } = route.params
   const [businessDetails, setBusinessDetails] = useState('')
   console.log("🚀 ~ file: BusinessDetails.js ~ line 8 ~ BusinessDetails ~ businessDetails", businessDetails)
-  const { callback, setCallBack } = useLogin()
-
+  const { callback, setCallBack,token } = useLogin()
+const Navigator= useNavigation()
   const [sDescription, setSDescription] = useState(true)
   const [sReviews, setSReviews] = useState(false)
   const [sProducts, setSProducts] = useState(false)
@@ -39,6 +39,39 @@ const MyBusinessDetails = ({route}) => {
 
 
 
+  const deleteBusinuss = async () => {
+    try {
+      const res = await client.delete(`/api/business/delete/${BID}`, {
+        headers: { Authorization: token }
+      })
+      setCallBack(true)
+      Navigator.navigate('MyBusinesses')
+
+
+    } catch (error) {
+      console.log("🚀 ~ file: MyBusinessDetails.js ~ line 45 ~ deleteBusinuss ~ error", error.response.data)
+      // Alert.alert(
+      //   "Error !",
+      //   error.response.data.message
+      // )
+    }
+  }
+  const deleteBusinussAlert = async () => {
+    Alert.alert(
+      "Delete Business",
+      "Are you sure to delete this business ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: async () => deleteBusinuss() }
+      ]
+    );
+  }
+
+
   return (
     <LinearGradient
       // Background Linear Gradient
@@ -47,8 +80,13 @@ const MyBusinessDetails = ({route}) => {
     >
       <SafeAreaView style={{ marginTop: 20, flex: 1, }}>
         <ScrollView>
+          {/* <View style={{ flex: 1 }}>
+            <Image source={require('../../../assets/commonIcons/cover.png')} style={{ height: '60%', width: '100%' }}></Image>
+          </View> */}
           <View style={{ margin: 10, padding: 10, backgroundColor: '#D9D9D9' }}>
+
             <View>
+
               <Text style={{ textAlign: 'center', fontWeight: 'bold', padding: 5, fontSize: 24, color: '#36455A' }}>{businessDetails.business_name}</Text>
             </View>
             <View>
@@ -145,10 +183,15 @@ const MyBusinessDetails = ({route}) => {
             {
               //category
               sDescription && <>
+                <View style={{ justifyContent: 'space-around', flex: 1, flexDirection: 'row', padding: 10 }}>
+                  <TouchableOpacity style={{ backgroundColor: '#FFB801', padding: 8, width: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 50, justifyContent: 'center' }}><Image source={require('../../../assets/commonIcons/Edit.png')} style={{ marginRight: 5 }}></Image><Text style={{ color: '#fff', textAlign: 'center' }}>Edit</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={deleteBusinussAlert} style={{ backgroundColor: '#FF0101', padding: 8, width: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 50, justifyContent: 'center' }}><Image source={require('../../../assets/commonIcons/Delete.png')} style={{ marginRight: 5 }} /><Text style={{ color: '#fff', textAlign: 'center' }}>Delete</Text></TouchableOpacity>
+
+                </View>
                 <View style={{ backgroundColor: '#fff', padding: 10, marginTop: 5 }}>
-                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                  <View style={{ flexDirection: 'row', marginBottom: 5 }}>
                     <Text style={{ color: '#2A2B5F', fontWeight: 'bold', fontSize: 18 }}>
-                    Category :{' '}
+                      Category :{' '}
                     </Text>
                     <Text style={{ color: '#000', fontSize: 18, flex: 1, flexWrap: 'wrap' }}>
                       {businessDetails.category}
@@ -174,21 +217,21 @@ const MyBusinessDetails = ({route}) => {
                     <Text style={{ color: '#2A2B5F', fontWeight: 'bold', fontSize: 18 }}>
                       Expects :{' '}
                     </Text>
-                    <View style={{ flex:1,flexDirection:'row',flexWrap: 'wrap'}}>
-                    {
-                      businessDetails.expectations?.map(e => {
-                        return <View key={e} >
-                          <View style={{ backgroundColor:'#2A2B5F', margin:5, padding:8}}>
-                          <Text style={{ color: '#fff', fontSize: 18, }}>
-                            {e==='looking_advisors'&&'Looking Advisors'}
-                            {e==='looking_investors'&&'Looking Investors'}
-                            {e==='sell_products'&&'Sell Products'}
-                            {e==='looking_donetors'&&'Looking Donetors'}
-                          </Text>
+                    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+                      {
+                        businessDetails.expectations?.map(e => {
+                          return <View key={e} >
+                            <View style={{ backgroundColor: '#2A2B5F', margin: 5, padding: 8 }}>
+                              <Text style={{ color: '#fff', fontSize: 18, }}>
+                                {e === 'looking_advisors' && 'Looking Advisors'}
+                                {e === 'looking_investors' && 'Looking Investors'}
+                                {e === 'sell_products' && 'Sell Products'}
+                                {e === 'looking_donetors' && 'Looking Donetors'}
+                              </Text>
+                            </View>
                           </View>
-                        </View>
-                      })
-                    }
+                        })
+                      }
                     </View>
                   </View>
                 </View>
