@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useEffect, useState } from 'react'
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
@@ -10,6 +11,7 @@ const Businesses = () => {
     const {callback, setCallBack} = useLogin()
     const [isBokkMarked, setIsBoomarked] = useState(false)
     const [businesses, setBusinesses] = useState([])
+    const Navigator = useNavigation()
 
     useEffect(() => {
         const getAllBusiness = async () => {
@@ -56,7 +58,13 @@ const Businesses = () => {
                                         return  <View key={m._id} style={[styles.card, styles.elevation]}>
                                         <View style={styles.ridesFriends}>
                                             <View style={styles.left}>
-                                                <View style={{ flexDirection: 'row' }}>
+                                             <TouchableOpacity onPress={()=>{
+                                                Navigator.navigate('BusinessDetails',{
+                                                    BID:m._id
+                                                })
+                                                setCallBack(true)
+                                             }}>
+                                             <View style={{ flexDirection: 'row' }}>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                         <Image source={require('../../../assets/homeIcons/office-building-icon.png')} style={{ marginRight: 5, width: 40, height: 40 }} />
                                                         <Text style={styles.cardTitle}>{m.business_name}</Text>
@@ -83,16 +91,16 @@ const Businesses = () => {
                                                         <Text style={{ marginRight: 5 }}>{m.location}</Text>
                                                     </View>
                                                 </View>
+                                             </TouchableOpacity>
                                             </View>
                                             <View style={styles.verticleLine}></View>
-                                            <View style={styles.right}>{isBokkMarked ? <Image source={require('../../../assets/homeIcons/bookmarked.png')} /> : <Image source={require('../../../assets/homeIcons/bookmark.png')} />}</View>
+                                            <View style={styles.right}>{isBokkMarked ? <Image source={require('../../../assets/homeIcons/bookmarked.png')} style={{marginRight:10}} /> : <Image source={require('../../../assets/homeIcons/bookmark.png')} style={{marginRight:10}}/>}</View>
                                         </View>
                                     </View>
                                     })
                                 }
                             </SafeAreaView>
                         </ScrollView>
-
                     </View>
                 </View>
             </SafeAreaView>
@@ -118,10 +126,9 @@ const styles = StyleSheet.create({
     },
     right: {
         width: '18%',
-        marginLeft: 5,
+        marginLeft: 2,
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     verticleLine: {
         height: '100%',
@@ -166,7 +173,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 8,
         paddingVertical: 20,
-        paddingHorizontal: 25,
+        paddingHorizontal: 10,
         width: '100%',
         marginVertical: 10,
         margin: 10,
