@@ -117,6 +117,10 @@ const HomeStackScreen = ({navigation}) => (
         title:'Business Details',
         headerShown: true
         }} />
+          <HomeStack.Screen name="AddAdvisorGig" component={AddAdvisorGig}  options={{
+        title:'AddAdvisorGig',
+        headerShown: true
+        }} />
         <HomeStack.Screen name="Reviews" component={Reviews}  options={{
         title:'Reviews',
         headerShown: true
