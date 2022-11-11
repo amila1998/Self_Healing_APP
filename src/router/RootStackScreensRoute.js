@@ -8,6 +8,10 @@ import Login from "../screen/auth/Login";
 import Forgot from "../screen/auth/Forgot";
 import ResetPassword from "../screen/auth/ResetPassword";
 import MainTabScreen from "./MainTabScreenRoute";
+import AddReview from "../screen/reviews/AddReview";
+import EditReview from "../screen/reviews/EditReview";
+import Product from "../screen/product/Product";
+import Reviews from "../screen/reviews/Reviews";
 const Stack = createNativeStackNavigator();
 
 
@@ -21,6 +25,10 @@ const RootStackScreen = () => {
                 <Stack.Screen options={{ headerShown: false }} name="Main" component={MainTabScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="Forgot" component={Forgot} />
                 <Stack.Screen options={{ headerShown: false }} name="ResetPassword" component={ResetPassword} />
+                <Stack.Screen options={{ headerShown: false }} name="AddReview" component={AddReview} />
+                <Stack.Screen options={{ headerShown: false }} name="EditReview" component={EditReview} />
+                <Stack.Screen options={{ headerShown: false }} name="Reviews" component={Reviews} />
+                <Stack.Screen options={{ headerShown: false }} name="Product" component={Product} />
             </Stack.Navigator>
    
     )
