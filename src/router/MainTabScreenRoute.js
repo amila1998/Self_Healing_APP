@@ -17,6 +17,7 @@ import MyBusinesses from '../screen/businesses/MyBusinesses';
 import AddNewBusiness from '../screen/businesses/AddNewBusiness';
 import MyBusinessDetails from '../screen/businesses/MyBusinessDetails';
 import BusinessDetails from '../screen/businesses/BusinessDetails';
+import EditBusiness from '../screen/businesses/EditBusiness';
 
 // import HomeScreen from './HomeScreen';
 // import DetailsScreen from './DetailsScreen';
@@ -143,6 +144,10 @@ const HomeStackScreen = ({navigation}) => (
           }} />
             <ProfileStack.Screen name="MyBusinessDetails" component={MyBusinessDetails}  options={{
           title:'My Business Details',
+          headerShown: true
+          }} />
+            <ProfileStack.Screen name="EditBusiness" component={EditBusiness}  options={{
+          title:'Edit Business Details',
           headerShown: true
           }} />
       </ProfileStack.Navigator>

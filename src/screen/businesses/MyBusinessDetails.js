@@ -62,11 +62,11 @@ const Navigator= useNavigation()
       "Are you sure to delete this business ?",
       [
         {
-          text: "Cancel",
+          text: "No",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: async () => deleteBusinuss() }
+        { text: "Yes", onPress: async () => deleteBusinuss() }
       ]
     );
   }
@@ -184,7 +184,12 @@ const Navigator= useNavigation()
               //category
               sDescription && <>
                 <View style={{ justifyContent: 'space-around', flex: 1, flexDirection: 'row', padding: 10 }}>
-                  <TouchableOpacity style={{ backgroundColor: '#FFB801', padding: 8, width: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 50, justifyContent: 'center' }}><Image source={require('../../../assets/commonIcons/Edit.png')} style={{ marginRight: 5 }}></Image><Text style={{ color: '#fff', textAlign: 'center' }}>Edit</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={()=>{
+                    setCallBack(true)
+                    Navigator.navigate('EditBusiness',{
+                      BID
+                    })
+                  }} style={{ backgroundColor: '#FFB801', padding: 8, width: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 50, justifyContent: 'center' }}><Image source={require('../../../assets/commonIcons/Edit.png')} style={{ marginRight: 5 }}></Image><Text style={{ color: '#fff', textAlign: 'center' }}>Edit</Text></TouchableOpacity>
                   <TouchableOpacity onPress={deleteBusinussAlert} style={{ backgroundColor: '#FF0101', padding: 8, width: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 50, justifyContent: 'center' }}><Image source={require('../../../assets/commonIcons/Delete.png')} style={{ marginRight: 5 }} /><Text style={{ color: '#fff', textAlign: 'center' }}>Delete</Text></TouchableOpacity>
 
                 </View>
