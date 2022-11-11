@@ -77,7 +77,7 @@ const Login = () => {
                                 <TextInput keyboardType='email-address' onChangeText={setEmail} style={styles.textInput} placeholder='Email'></TextInput>
                             </View>
                             <View style={styles.formInput}>
-                                <TextInput onChangeText={(password) => setPasword({ password })} style={styles.textInput} password={true} placeholder='Password' secureTextEntry={!showPassword?false:true}></TextInput>
+                                <TextInput onChangeText={setPasword} style={styles.textInput} placeholder='Password' secureTextEntry={!showPassword?false:true}></TextInput>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
                                 <Switch
                                     onValueChange={toggleSwitch}
