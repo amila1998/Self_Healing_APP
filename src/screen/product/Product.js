@@ -1,10 +1,52 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from "react";
-import { StyleSheet, Text, View, Image, Button, SafeAreaView, ScrollView } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, Button, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import bGStyles from '../../Styles/Background';
 import Colors from '../../Styles/Colors';
+import client from '../../apiRouter/client'
+import { useLogin } from '../../context/LoginProvider';
 
-function Product() {
+function Product({ navigation, route }) {
+    const { productID } = route.params;
+    console.log("🚀 ~ file: Product.js ~ line 10 ~ Product ~ productID", productID)
+    const [product, setProduct] = useState('');
+    console.log("🚀 ~ file: Product.js ~ line 11 ~ Product ~ product", product)
+    const [reviews, setReviews] = useState([]);
+    console.log("🚀 ~ file: Product.js ~ line 15 ~ Product ~ reviews", reviews)
+    //const { callback, setCallBack } = useState(true)
+
+    useEffect(() => {
+        const getAProduct = async () => {
+            try {
+                const res = await client.get(`/api/product/getAProduct/${productID}`)
+                setProduct(res.data.product);
+                const res1 = await client.get(`/api/review/getAllReviewsProductWise/${productID}`)
+                setReviews(res1.data.reviews)
+                //setCallBack(false)
+            } catch (error) {
+                console.log("🚀 ~ file: Product.js ~ line 22 ~ getAProduct ~ error", error)
+            }
+        }
+        getAProduct()
+        // if (callback) {
+        //     getAProduct()
+        // }
+
+    }, [productID])
+
+    //   useEffect(() => {
+    //     const getAllReviewsProductWise = async () => {
+    //         try {
+
+    //         } catch (error) {
+    //             console.log("🚀 ~ file: ViewSearchedRoutes.js ~ line 19 ~ getAllBusShedules ~ error", error)
+
+    //         }
+    //     }
+    //     getAllReviewsProductWise()
+    // }, [productID])
+
+
 
     return (
         <LinearGradient
@@ -13,41 +55,61 @@ function Product() {
             style={bGStyles.background}
         >
 
+            <View>
+
+                <Text style={styles.styleProductInfo}>
+                    {`Product Info`}
+                </Text>
+                <Text style={styles.styleRs550000}>
+                    Rs. {product.productPrice}
+                </Text>
+                <TextInput style={[styles.styleQuentity , {borderColor : '#000' , height : 50  }]} keyboardType="numeric" maxLength={1} defaultValue="1"/>
+                <Text style={styles.stylePrice}>
+                    {`Price`}
+                </Text>
+                <Image style={[styles.styleImage, { transform: [{ rotate: "0deg" }] }]} source={{ uri: `${product.productImage}` }} />
+                <Text style={styles.styleQuentityLabel}>
+                    {`Quentity`}
+                </Text>
+                
+                <View style={styles.styleAddToCart}>
+                    <Button title='Add to Cart' color="#ff6d27" />
+                </View>
+                <View style={styles.styleBuyNow}>
+                    <Button title='Buy Now' color="#ff6d27" onPress={() => { navigation.navigate('Buy' , {productID : product._id , productName : product.productName , productprice : product.productPrice })}}/>
+                </View>
+                <Text style={styles.styleProductDescription}>
+                    {product.productInfo}
+                </Text>
+                <View style={styles.reviewsOnChocolateCake}>
+                    <Text style={styles.style2ReviewsOnChocolateCake}>
+                        {`${reviews.length} Reviews on ${product.productName}`}
+                    </Text>
+                </View>
+                <View style={styles.styleReviews}>
                     <View>
-
-                        <Text style={styles.styleProductInfo}>
-                            {`Product Info`}
+                        <Text numberOfLines={1} style={{ width: 320, marginTop: 0, left: 10, color: '#AAAA' }} >
+                            _____________________________________________________________
                         </Text>
-                        <Text style={styles.styleRs550000}>
-                            {`Rs: 5500.00`}
-                        </Text>
-                        <Text style={styles.stylePrice}>
-                            {`Price`}
-                        </Text>
-                        <Image style={[styles.styleImage, { transform: [{ rotate: "0deg" }] }]} source={{ uri: "https://nyc3.digitaloceanspaces.com/sizze-storage/media/images/F1auGMbQ2JsmmqBxvh24i3Ep.jpeg" }} />
-                        <Text style={styles.styleQuentity}>
-                            {`Quentity`}
-                        </Text>
-                        <View style={styles.styleAddToCart}>
-                            <Button title='Add to Cart' color="#ff6d27" />
-                        </View>
-                        <View style={styles.styleBuyNow}>
-                            <Button title='Buy Now' color="#ff6d27" />
-                        </View>
-                        <Text style={styles.styleProductDescription}>
-                            {`Chocolate cake, traditional German chocolate filling (lightly creamy caramel pecan coconut) and chocolate frosting. Accented with chocolate ganache & toasted coconut`}
-                        </Text>
-                        <View style={styles.reviewsOnChocolateCake}>
-                            <Text style={styles.style2ReviewsOnChocolateCake}>
-                                {`2 Reviews on Chocolate Cake`}
-                            </Text>
-                        </View>
-
-                        <View style={styles.styleReviews}>
-                            <Button title='Reviews' />
-                        </View>
-
                     </View>
+                    <TouchableOpacity onPress={() => { navigation.navigate('Reviews' , {productID : product._id , productImage : product.productImage , productName : product.productName }) }}>
+                        <View style={styles.addReviewBtn} >
+                            <View >
+                                <Image style={styles.addIcon} resizeMode={'contain'} source={require('../../../assets/productReview.png')} />
+                            </View>
+                            <View>
+                                <Text style={[styles.addReviewText, { fontSize: 16, color: '#fff', fontWeight: 'bold' }]} > Reviews</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    <View>
+                        <Text numberOfLines={1} style={{ width: 320, marginTop: 25, left: 10, color: '#AAAA' }} >
+                            _____________________________________________________________
+                        </Text>
+                    </View>
+                </View>
+
+            </View>
         </LinearGradient>
 
     )
@@ -57,6 +119,25 @@ function Product() {
 export default Product
 
 const styles = StyleSheet.create({
+    addReviewBtn: {
+        flex: 1,
+        width: 341,
+        height: 10,
+        left: 30,
+        marginTop: 10,
+    },
+    addIcon: {
+        width: 32,
+        height: 34,
+        position: "absolute",
+        left: 30,
+        top: 4,
+    },
+    addReviewText: {
+        position: "absolute",
+        left: 80,
+        top: 10,
+    },
     styleProductInfo: {
         position: "absolute",
         left: 58,
@@ -103,7 +184,7 @@ const styles = StyleSheet.create({
         width: 147,
         height: 145,
     },
-    styleQuentity: {
+    styleQuentityLabel: {
         position: "absolute",
         left: 247,
         top: 265,
@@ -114,6 +195,18 @@ const styles = StyleSheet.create({
         textAlign: "left",
         height: "auto",
         lineHeight: 16.1,
+    },
+    styleQuentity: {
+        position: "absolute",
+        left: 200,
+        top: 288,
+        width: 80,
+        color: "rgba(54, 68, 89, 1)",
+        letterSpacing: 0,
+        fontStyle: "normal",
+        textAlign: "left",
+        height: "auto",
+        lineHeight: 13.8,
     },
     styleAddToCart: {
         position: "absolute",
@@ -170,7 +263,7 @@ const styles = StyleSheet.create({
 
     styleReviews: {
         position: "absolute",
-        left: 115,
+        left: 30,
         top: 590,
         width: 200,
         color: "rgba(255, 255, 255, 1)",
