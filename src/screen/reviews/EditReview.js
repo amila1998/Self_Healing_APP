@@ -7,34 +7,13 @@ import bGStyles from '../../Styles/Background';
 import Colors from '../../Styles/Colors';
 
 function EditReview({ navigation, route }) {
-    const reviewDetails = (type) => {
-        if (route.params) {
-            switch (type) {
-                case "reviewID":
-                    return route.params.reviewID
-                case "productID":
-                    return route.params.productID
-                case "title":
-                    return route.params.title
-                case "description":
-                    return route.params.description
-                case "recommendation":
-                    return route.params.recommendation
-            }
-        }
-        return ""
-    }
-
+    const {reviewID ,  productID  } = route.params;
+    const [product, setProduct] = useState('');
     const [review, setReview] = useState();
-    console.log("🚀 ~ file: EditReview.js ~ line 10 ~ EditReview ~ review", review)
-    const [reviewID, setReviewID] = useState(reviewDetails("reviewID"));
-    console.log("🚀 ~ file: EditReview.js ~ line 31 ~ EditReview ~ reviewID", reviewID)
     const [title, setTitle] = useState();
-    console.log("🚀 ~ file: EditReview.js ~ line 13 ~ EditReview ~ title", title)
+    console.log("🚀 ~ file: EditReview.js ~ line 14 ~ EditReview ~ title", title)
     const [description, setDescription] = useState();
-    console.log("🚀 ~ file: EditReview.js ~ line 15 ~ EditReview ~ description", description)
-    const [recommendation, setRecommendation] = useState();
-    console.log("🚀 ~ file: EditReview.js ~ line 13 ~ EditReview ~ recommendation", recommendation)
+    console.log("🚀 ~ file: EditReview.js ~ line 16 ~ EditReview ~ description", description)
     const [chosenOption, setChosenOption] = useState(null); //will store our current user options
     console.log("🚀 ~ file: EditReview.js ~ line 12 ~ EditReview ~ chosenOption", chosenOption)
 
@@ -44,31 +23,47 @@ function EditReview({ navigation, route }) {
     ]; //create our options for radio group
 
     useEffect(() => {
-        const getAReview = async (reviewID) => {
+        const getAProduct = async () => {
             try {
-                const res = await client.get(`/api/review/getAReview/${reviewID}`)
-                setReview(res.data.review)
-                // setRecommendation(res.data.review.recommendation)
-                // setTitle(res.data.review.title);
-                // setDescription(res.data.review.description);
+                const res = await client.get(`/api/product/getAProduct/${productID}`)
+                setProduct(res.data.product);
+                const res1 = await client.get(`/api/review/getAReview/${reviewID}`)
+                setReview(res1.data.review)
+                //setCallBack(false)
             } catch (error) {
-                console.log("🚀 ~ file: EditReview.js ~ line 22 ~ getAllReviewsProductWise ~ error", error)
-
-
+                console.log("🚀 ~ file: Product.js ~ line 22 ~ getAProduct ~ error", error)
             }
         }
-        getAReview(reviewID)
-    }, [])
+        getAProduct()
+        // if (callback) {
+        //     getAProduct()
+        // }
+
+    }, [productID])
+
+    // useEffect(() => {
+    //     const getAReview = async (reviewID) => {
+    //         try {
+    //             const res = await client.get(`/api/review/getAReview/${reviewID}`)
+    //             setReview(res.data.review)
+    //             // setRecommendation(res.data.review.recommendation)
+    //             // setTitle(res.data.review.title);
+    //             // setDescription(res.data.review.description);
+    //         } catch (error) {
+    //             console.log("🚀 ~ file: EditReview.js ~ line 22 ~ getAllReviewsProductWise ~ error", error)
+
+
+    //         }
+    //     }
+    //     getAReview(reviewID)
+    // }, [])
 
     const editReviewHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await client.put(`/api/review/editReview/${reviewID}`, { "title": title, "description": description, "recommendation": chosenOption })
+            const res = await client.put(`/api/review/editReview/${reviewID}`, { title: title, description: description, recommendation: chosenOption })
             alert(res.data.message)
-            navigation.navigate('Reviews', {productID : review.productID});
-            // setRecommendation(res.data.review.recommendation)
-            // setTitle(res.data.review.title);
-            // setDescription(res.data.review.description);
+            navigation.navigate('Reviews', {productID : product._id , productImage : product.productImage , productName : product.productName });
         } catch (error) {
             console.log("🚀 ~ file: EditReview.js ~ line 22 ~ getAllReviewsProductWise ~ error", error)
 
@@ -87,11 +82,11 @@ return (
                 <View>
                     <View style={styles.productContainer} >
                         <View >
-                            <Image style={styles.productImageContainer} resizeMode={'contain'} source={require('../../../assets/triple-chocolate-cake-4.jpg')} />
+                            <Image style={styles.productImageContainer} resizeMode={'contain'} source={{ uri: `${product.productImage}` }} />
                         </View>
                         <View>
-                            <Text style={styles.productCategoryContainer}> Cake</Text>
-                            <Text style={styles.productNameContainer}> Chocolate Cake</Text>
+                            <Text style={styles.productCategoryContainer}> {product.productCategory}</Text>
+                            <Text style={styles.productNameContainer}> {product.productName}</Text>
                         </View>
                     </View>
 
@@ -113,7 +108,7 @@ return (
                             <Text style={{ fontSize: 16, color: '#fff', fontWeight: 'bold', marginTop: 10, left: 60 }}>What did you like or dislike ?</Text>
                         </View>
                         <View style={styles.formInput}>
-                            <TextInput style={[styles.textInput, { height: 120 }]} multiline={true} placeholder='What should buyers know befor ?' defaultValue={review?.description} onChange={setDescription}></TextInput>
+                            <TextInput style={[styles.textInput, { height: 120 }]} multiline={true} placeholder='What should buyers know befor ?' defaultValue ={review?.description} onChangeText={setDescription}></TextInput>
                         </View>
                         <View >
                             <Text style={{ fontSize: 16, color: '#fff', fontWeight: 'bold', marginTop: 10, left: 60 }}>Would you recommend this product</Text>
@@ -124,7 +119,7 @@ return (
                                 radio_props={options}
                                 initial={0} //initial value of this group
                                 onPress={(value) => {
-                                    setRecommendation(value);
+                                    setChosenOption(value);
                                 }} //if the user changes options, set the new value
                             />
                         </View>
