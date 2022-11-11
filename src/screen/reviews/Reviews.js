@@ -6,13 +6,13 @@ import { StyleSheet, Text, View, Image, Button, Dimensions, SafeAreaView, Scroll
 import bGStyles from '../../Styles/Background';
 import Colors from '../../Styles/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { useLogin } from '../../context/LoginProvider';
 
-
-
-function Reviews() {
+function Reviews({navigation}) {
+    const { profile } = useLogin();
     const [reviews, setReviews] = useState([]);
-    const [userID, setUserID] = useState('63679685cacfae6c5da54c7b');
-    const navigation = useNavigation();
+    const [userID, setUserID] = useState(profile._id);
+    // const navigation = useNavigation();
 
     useEffect(() => {
         const getAllReviewsProductWise = async () => {
@@ -40,10 +40,6 @@ function Reviews() {
 
             console.log(error)
         }
-    }
-
-    const addReview = async () => {
-        Navigator.navigate('AddReview')
     }
 
     return (
@@ -102,7 +98,7 @@ function Reviews() {
                                                         <View >
                                                             <Text style={[styles.reviewEdit, { fontSize: 16, color: '#FF3347', fontWeight: 'bold' }]} onPress={() => {
                                                                 navigation.navigate('EditReview', {
-                                                                    productID: reviews.productID, title: reviews.title , description: reviews.description, recommendation: reviews.recommendation
+                                                                    reviewID : reviews._id ,  productID: reviews.productID, title: reviews.title , description: reviews.description, recommendation: reviews.recommendation
                                                                 })
                                                             }}>Edit</Text>
                                                         </View>

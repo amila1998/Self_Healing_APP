@@ -17,6 +17,7 @@ import MyBusinesses from '../screen/businesses/MyBusinesses';
 import AddNewBusiness from '../screen/businesses/AddNewBusiness';
 import MyBusinessDetails from '../screen/businesses/MyBusinessDetails';
 import BusinessDetails from '../screen/businesses/BusinessDetails';
+import Reviews from '../screen/reviews/Reviews';
 
 // import HomeScreen from './HomeScreen';
 // import DetailsScreen from './DetailsScreen';
@@ -114,6 +115,10 @@ const HomeStackScreen = ({navigation}) => (
         }} />
           <HomeStack.Screen name="BusinessDetails" component={BusinessDetails}  options={{
         title:'Business Details',
+        headerShown: true
+        }} />
+        <HomeStack.Screen name="Reviews" component={Reviews}  options={{
+        title:'Reviews',
         headerShown: true
         }} />
     </HomeStack.Navigator>

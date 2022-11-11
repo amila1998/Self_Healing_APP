@@ -7,20 +7,21 @@ import RadioForm from 'react-native-simple-radio-button'
 import bGStyles from '../../Styles/Background';
 import Colors from '../../Styles/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { useLogin } from '../../context/LoginProvider';
 
 function AddReview({navigation}) {
+    const { profile } = useLogin();
     const [recommendation, setRecommendation] = useState(null); //will store our current user options
-    const [userID , setUserID] = useState('63679685cacfae6c5da54c7b');
+    const [userID , setUserID] = useState(profile._id);
     const [productID , setProductID] = useState('74657465465456765ytuyt65755');
-    const [first_name , setFirst_name] = useState('amila');
-    const [last_name , setLast_name] = useState('devin');
+    const [first_name , setFirst_name] = useState(profile.first_name);
+    const [last_name , setLast_name] = useState(profile.last_name);
     const [title , setTitle] = useState('');
     const [description , setDescription] = useState('');
     const options = [
         { label: 'Yes', value: 'Yes' },
         { label: 'No', value: 'No' },
     ]; //create our options for radio group
-    const Navigator = useNavigation();
 
     const addReviewHandler = async (e) => {
         e.preventDefault();
@@ -31,7 +32,7 @@ function AddReview({navigation}) {
                 const res = await client.post("/api/review/addReview",{productID , userID , first_name , last_name , title , description , recommendation });
                 console.log(res.data);
                 alert(res.data.message);
-                Navigator.navigate('Reviews');
+                navigation.navigate('Reviews');
 
             } catch (err) {
                 console.log("🚀 ~ file: AddReview.js ~ line 39 ~ addReviewHandler ~ err", err.message)

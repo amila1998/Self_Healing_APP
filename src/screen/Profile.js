@@ -75,7 +75,7 @@ const Profile = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ justifyContent: 'center', margin: 15 }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={()=>Navigator.navigate('Reviews')}>
                                     <Image source={require('../../assets/profileIcons/MyReviews.png')} style={{ width:115 ,height:115}}/>
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>My Reviews</Text>
                                 </TouchableOpacity>
