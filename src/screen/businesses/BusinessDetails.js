@@ -178,8 +178,8 @@ const BusinessDetails = ({ route }) => {
                     {
                       businessDetails.expectations?.map(e => {
                         return <View key={e} >
-                          <View style={{ backgroundColor:'#2A2B5F', margin:5, padding:5}}>
-                          <Text style={{ color: '#000', fontSize: 18, }}>
+                          <View style={{ backgroundColor:'#2A2B5F', margin:5, padding:8}}>
+                          <Text style={{ color: '#fff', fontSize: 18, }}>
                             {e==='looking_advisors'&&'Looking Advisors'}
                             {e==='looking_investors'&&'Looking Investors'}
                             {e==='sell_products'&&'Sell Products'}
