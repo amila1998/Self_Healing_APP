@@ -67,7 +67,7 @@ const BusinessDetails = ({ route }) => {
                   {
                     sDescription && <View style={{ width: '100%', backgroundColor: '#FF6D27', height: 5 }}></View>
                   }
-                  <Text style={{fontSize:20}}>Description</Text>
+                  <Text style={{ fontSize: 16 }}>Description</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={sReviews ? styles.selectedBtn : styles.unSelectedBtn}
                   onPress={() => {
@@ -81,7 +81,7 @@ const BusinessDetails = ({ route }) => {
                   {
                     sReviews && <View style={{ width: '100%', backgroundColor: '#FF6D27', height: 5, }}></View>
                   }
-                  <Text>Reviews</Text>
+                  <Text style={{ fontSize: 16 }}>Reviews</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={sProducts ? styles.selectedBtn : styles.unSelectedBtn}
                   onPress={() => {
@@ -95,7 +95,7 @@ const BusinessDetails = ({ route }) => {
                   {
                     sProducts && <View style={{ width: '100%', backgroundColor: '#FF6D27', height: 5 }}></View>
                   }
-                  <Text>Products</Text>
+                  <Text style={{ fontSize: 16 }}>Products</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={sDonents ? styles.selectedBtn : styles.unSelectedBtn}
                   onPress={() => {
@@ -109,7 +109,7 @@ const BusinessDetails = ({ route }) => {
                   {
                     sDonents && <View style={{ width: '100%', backgroundColor: '#FF6D27', height: 5 }}></View>
                   }
-                  <Text>Donents</Text>
+                  <Text style={{ fontSize: 16 }}>Donents</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={sInsvestors ? styles.selectedBtn : styles.unSelectedBtn}
                   onPress={() => {
@@ -123,7 +123,7 @@ const BusinessDetails = ({ route }) => {
                   {
                     sInsvestors && <View style={{ width: '100%', backgroundColor: '#FF6D27', height: 5 }}></View>
                   }
-                  <Text>Insvestors</Text>
+                  <Text style={{ fontSize: 16 }}>Insvestors</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={sAdvises ? styles.selectedBtn : styles.unSelectedBtn}
                   onPress={() => {
@@ -137,19 +137,60 @@ const BusinessDetails = ({ route }) => {
                   {
                     sAdvises && <View style={{ width: '100%', backgroundColor: '#FF6D27', height: 5 }}></View>
                   }
-                  <Text>Advises</Text>
+                  <Text style={{ fontSize: 16 }}>Advises</Text>
                 </TouchableOpacity>
 
               </ScrollView>
             </View>
             {
+              //category
               sDescription && <>
-                <View style={{  backgroundColor: '#fff', padding: 10, marginTop: 5 }}>
-                    <View style={{flexDirection:'row',}}>
-                      <Text style={{color:'#2A2B5F', fontWeight:'bold', fontSize:18}}>
-                        Status : 
-                      </Text>
+                <View style={{ backgroundColor: '#fff', padding: 10, marginTop: 5 }}>
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <Text style={{ color: '#2A2B5F', fontWeight: 'bold', fontSize: 18 }}>
+                    Category :{' '}
+                    </Text>
+                    <Text style={{ color: '#000', fontSize: 18, flex: 1, flexWrap: 'wrap' }}>
+                      {businessDetails.category}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <Text style={{ color: '#2A2B5F', fontWeight: 'bold', fontSize: 18 }}>
+                      Status :{' '}
+                    </Text>
+                    <Text style={{ color: '#000', fontSize: 18, flex: 1, flexWrap: 'wrap' }}>
+                      {businessDetails.status === 'hope_to_start' && 'Hope to start'}{businessDetails.status === 'started_as_new_business' && 'Started as a new business'}{businessDetails.status === 'Already_started' && 'Already Started (one month ago)'}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <Text style={{ color: '#2A2B5F', fontWeight: 'bold', fontSize: 18 }}>
+                      Description :{' '}
+                    </Text>
+                    <Text style={{ color: '#000', fontSize: 18, flex: 1, flexWrap: 'wrap' }}>
+                      {businessDetails.description}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <Text style={{ color: '#2A2B5F', fontWeight: 'bold', fontSize: 18 }}>
+                      Expects :{' '}
+                    </Text>
+                    <View style={{ flex:1,flexDirection:'row',flexWrap: 'wrap'}}>
+                    {
+                      businessDetails.expectations?.map(e => {
+                        return <View key={e} >
+                          <View style={{ backgroundColor:'#2A2B5F', margin:5, padding:8}}>
+                          <Text style={{ color: '#fff', fontSize: 18, }}>
+                            {e==='looking_advisors'&&'Looking Advisors'}
+                            {e==='looking_investors'&&'Looking Investors'}
+                            {e==='sell_products'&&'Sell Products'}
+                            {e==='looking_donetors'&&'Looking Donetors'}
+                          </Text>
+                          </View>
+                        </View>
+                      })
+                    }
                     </View>
+                  </View>
                 </View>
               </>
             }
