@@ -4,8 +4,10 @@ import { StyleSheet, Text, View, Button, SafeAreaView, ScrollViewComponent, Scro
 import bGStyles from '../Styles/Background';
 import Colors from '../Styles/Colors'
 import { useNavigation } from '@react-navigation/native'
+import { useLogin } from '../context/LoginProvider';
 
 const Home = () => {
+    const {callback, setCallBack}=useLogin()
     const Navigator = useNavigation();
     return (
         <LinearGradient
@@ -36,7 +38,7 @@ const Home = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ justifyContent: 'center', margin: 15 }}>
-                                <TouchableOpacity onPress={()=>Navigator.navigate('Businesses')}>
+                                <TouchableOpacity onPress={()=>{Navigator.navigate('Businesses');setCallBack(true)}}>
                                     <Image source={require('../../assets/homeIcons/business.png')} />
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Businesses</Text>
                                 </TouchableOpacity>

@@ -8,7 +8,7 @@ import Colors from '../Styles/Colors'
 import { useNavigation } from '@react-navigation/native'
 import client from '../apiRouter/client';
 const Profile = () => {
-    const { profile } = useLogin();
+    const { profile,setCallBack } = useLogin();
     const Navigator = useNavigation();
 
     const logout =async()=>{
@@ -80,7 +80,7 @@ const Profile = () => {
                             <View style={{ flex: 1 , margin:20}}>
                         <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
                             <View style={{ justifyContent: 'center', margin: 15 }}>
-                                <TouchableOpacity onPress={()=>Navigator.navigate('MyBusinesses')}>
+                                <TouchableOpacity onPress={()=>{Navigator.navigate('MyBusinesses'); setCallBack(true)}}>
                                     <Image source={require('../../assets/profileIcons/MyBusinesses.png')} style={{ width:110 ,height:110}}/>
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>My Businesses</Text>
                                 </TouchableOpacity>
