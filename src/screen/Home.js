@@ -44,7 +44,7 @@ const Home = () => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ justifyContent: 'center', margin: 15 }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={()=>Navigator.navigate('ViewInvestorGigs')}>
                                     <Image source={require('../../assets/homeIcons/Investorgigs.png')} />
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Investor’s gigs</Text>
                                 </TouchableOpacity>

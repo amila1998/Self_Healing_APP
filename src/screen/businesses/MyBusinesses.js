@@ -67,6 +67,12 @@ const MyBusinesses = ({ route }) => {
                                 {
                                     mybusinesses.map(m => {
                                         return <View key={m._id} style={[styles.card, styles.elevation]}>
+                                            <TouchableOpacity onPress={()=>{
+                                                setCallBack(true)
+                                                Navigator.navigate('MyBusinessDetails',{
+                                                    BID:m._id
+                                                })
+                                            }}>
                                             <View style={styles.ridesFriends}>
                                                 <View style={styles.left}>
                                                     <View style={{ flexDirection: 'row' }}>
@@ -98,6 +104,7 @@ const MyBusinesses = ({ route }) => {
                                                     </View>
                                                 </View>
                                             </View>
+                                            </TouchableOpacity>
                                         </View>
                                     })
                                 }
