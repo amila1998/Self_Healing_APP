@@ -17,6 +17,9 @@ import MyBusinesses from '../screen/businesses/MyBusinesses';
 import AddNewBusiness from '../screen/businesses/AddNewBusiness';
 import MyBusinessDetails from '../screen/businesses/MyBusinessDetails';
 import BusinessDetails from '../screen/businesses/BusinessDetails';
+import ViewInvestorGigs from '../screen/investorGigs/ViewInvestorGigs';
+import Addgig from '../screen/investorGigs/Addgig';
+import EditGig from '../screen/investorGigs/EditGig';
 import Reviews from '../screen/reviews/Reviews';
 
 // import HomeScreen from './HomeScreen';
@@ -116,6 +119,17 @@ const HomeStackScreen = ({navigation}) => (
           <HomeStack.Screen name="BusinessDetails" component={BusinessDetails}  options={{
         title:'Business Details',
         headerShown: true
+        }} />
+        <HomeStack.Screen name="ViewInvestorGigs" component={ViewInvestorGigs}  options={{
+        title:"",
+        headerShown: true
+        }} />
+        <HomeStack.Screen name="Addgig" component={Addgig}  options={{
+        title:"",
+        headerShown: true
+        }} />
+        <HomeStack.Screen name="EditGig" component={EditGig}  options={{
+        title:"",
         }} />
         <HomeStack.Screen name="Reviews" component={Reviews}  options={{
         title:'Reviews',
