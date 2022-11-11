@@ -1,11 +1,37 @@
+import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import client from '../../apiRouter/client'
+import { useLogin } from '../../context/LoginProvider'
 import bGStyles from '../../Styles/Background'
 import Colors from '../../Styles/Colors'
 
 const Businesses = () => {
+    const {callback, setCallBack} = useLogin()
     const [isBokkMarked, setIsBoomarked] = useState(false)
+    const [businesses, setBusinesses] = useState([])
+    const Navigator = useNavigation()
+
+    useEffect(() => {
+        const getAllBusiness = async () => {
+            try {
+                const res = await client.get('/api/business/viewAll')
+                setBusinesses(res.data)
+                
+
+                setCallBack(false)
+
+            } catch (error) {
+                console.log("🚀 ~ file: MyBusinesses.js ~ line 23 ~ getAllBusiness ~ error", error)
+
+            }
+        }
+        if (callback) {
+            getAllBusiness();
+
+        }
+    }, [callback])
     return (
         <LinearGradient
             // Background Linear Gradient
@@ -27,44 +53,54 @@ const Businesses = () => {
                     <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', padding: 10 }}>
                         <ScrollView>
                             <SafeAreaView style={{ marginBottom: 30 }}>
-                                <View style={[styles.card, styles.elevation]}>
-                                    <View style={styles.ridesFriends}>
-                                        <View style={styles.left}>
-                                            <View style={{ flexDirection: 'row' }}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Image source={require('../../../assets/homeIcons/office-building-icon.png')} style={{ marginRight: 5, width: 40, height: 40 }} />
-                                                    <Text style={styles.cardTitle}>Hashi Cakes</Text>
+                                {
+                                    businesses.map(m=>{
+                                        return  <View key={m._id} style={[styles.card, styles.elevation]}>
+                                        <View style={styles.ridesFriends}>
+                                            <View style={styles.left}>
+                                             <TouchableOpacity onPress={()=>{
+                                                Navigator.navigate('BusinessDetails',{
+                                                    BID:m._id
+                                                })
+                                                setCallBack(true)
+                                             }}>
+                                             <View style={{ flexDirection: 'row' }}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <Image source={require('../../../assets/homeIcons/office-building-icon.png')} style={{ marginRight: 5, width: 40, height: 40 }} />
+                                                        <Text style={styles.cardTitle}>{m.business_name}</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
-                                            <View style={{ flexDirection: 'row', marginLeft: 40 }}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Text style={{ fontWeight: 'bold', marginRight: 5 }}>Status</Text>
-                                                    <Text style={{ fontWeight: 'bold', marginRight: 5 }}>:</Text>
-                                                    <Text style={{ marginRight: 5 }}>Hope to start</Text>
+                                                <View style={{ flexDirection: 'row', marginLeft: 40 }}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <Text style={{ fontWeight: 'bold', marginRight: 5 }}>Status</Text>
+                                                        <Text style={{ fontWeight: 'bold', marginRight: 5 }}>:</Text>
+                                                        <Text style={{ marginRight: 5 }}>{m.status === 'hope_to_start' && 'Hope to start'}{m.status === 'started_as_new_business' && 'Started as a new business'}{m.status === 'Already_started' && 'Already Started (one month ago)'}</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
-                                            <View style={{ flexDirection: 'row', marginLeft: 40 }}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Text style={{ fontWeight: 'bold', marginRight: 5 }}>Category</Text>
-                                                    <Text style={{ fontWeight: 'bold', marginRight: 5 }}>:</Text>
-                                                    <Text style={{ marginRight: 5 }}>Foods</Text>
+                                                <View style={{ flexDirection: 'row', marginLeft: 40 }}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <Text style={{ fontWeight: 'bold', marginRight: 5 }}>Category</Text>
+                                                        <Text style={{ fontWeight: 'bold', marginRight: 5 }}>:</Text>
+                                                        <Text style={{ marginRight: 5 }}>{m.category}</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
-                                            <View style={{ flexDirection: 'row', marginLeft: 40 }}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Text style={{ fontWeight: 'bold', marginRight: 5 }}>Location</Text>
-                                                    <Text style={{ fontWeight: 'bold', marginRight: 5 }}>:</Text>
-                                                    <Text style={{ marginRight: 5 }}>Panadura</Text>
+                                                <View style={{ flexDirection: 'row', marginLeft: 40 }}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <Text style={{ fontWeight: 'bold', marginRight: 5 }}>Location</Text>
+                                                        <Text style={{ fontWeight: 'bold', marginRight: 5 }}>:</Text>
+                                                        <Text style={{ marginRight: 5 }}>{m.location}</Text>
+                                                    </View>
                                                 </View>
+                                             </TouchableOpacity>
                                             </View>
+                                            <View style={styles.verticleLine}></View>
+                                            <View style={styles.right}>{isBokkMarked ? <Image source={require('../../../assets/homeIcons/bookmarked.png')} style={{marginRight:10}} /> : <Image source={require('../../../assets/homeIcons/bookmark.png')} style={{marginRight:10}}/>}</View>
                                         </View>
-                                        <View style={styles.verticleLine}></View>
-                                        <View style={styles.right}>{isBokkMarked ? <Image source={require('../../../assets/homeIcons/bookmarked.png')} /> : <Image source={require('../../../assets/homeIcons/bookmark.png')} />}</View>
                                     </View>
-                                </View>
+                                    })
+                                }
                             </SafeAreaView>
                         </ScrollView>
-
                     </View>
                 </View>
             </SafeAreaView>
@@ -86,13 +122,13 @@ const styles = StyleSheet.create({
     },
     left: {
         width: '80%',
+        overflow: 'hidden',
     },
     right: {
         width: '18%',
-        marginLeft: 5,
+        marginLeft: 2,
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     verticleLine: {
         height: '100%',
@@ -137,7 +173,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 8,
         paddingVertical: 20,
-        paddingHorizontal: 25,
+        paddingHorizontal: 10,
         width: '100%',
         marginVertical: 10,
         margin: 10,
