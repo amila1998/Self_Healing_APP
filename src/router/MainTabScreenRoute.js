@@ -22,6 +22,9 @@ import ViewInvestorGigs from '../screen/investorGigs/ViewInvestorGigs';
 import Addgig from '../screen/investorGigs/Addgig';
 import EditGig from '../screen/investorGigs/EditGig';
 import Reviews from '../screen/reviews/Reviews';
+import ViewAdvisorGigs from '../screen/advisorGigs/ViewAdvisorGigs';
+import AddAdvisorGig from '../screen/advisorGigs/AddAdvisorGig';
+import EditAdvisorGig from '../screen/advisorGigs/EditAdvisorGig';
 
 // import HomeScreen from './HomeScreen';
 // import DetailsScreen from './DetailsScreen';
@@ -121,6 +124,10 @@ const HomeStackScreen = ({navigation}) => (
         title:'Business Details',
         headerShown: true
         }} />
+          {/* <HomeStack.Screen name="AddAdvisorGig" component={AddAdvisorGig}  options={{
+        title:'AddAdvisorGig',
+        headerShown: true
+        }} /> */}
         <HomeStack.Screen name="ViewInvestorGigs" component={ViewInvestorGigs}  options={{
         title:"",
         headerShown: true
@@ -134,6 +141,18 @@ const HomeStackScreen = ({navigation}) => (
         }} />
         <HomeStack.Screen name="Reviews" component={Reviews}  options={{
         title:'Reviews',
+        headerShown: true
+        }} />
+        <HomeStack.Screen name="ViewAdvisorGigs" component={ViewAdvisorGigs}  options={{
+        title:'User Requests',
+        headerShown: true
+        }} />
+        <HomeStack.Screen name="AddAdvisorGig" component={AddAdvisorGig}  options={{
+        title:'Add Request',
+        headerShown: true
+        }} />
+        <HomeStack.Screen name="EditAdvisorGig" component={EditAdvisorGig}  options={{
+        title:'Edit Request',
         headerShown: true
         }} />
     </HomeStack.Navigator>
