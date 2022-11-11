@@ -112,7 +112,7 @@ const ViewAdvisorGigs = () => {
                         }]}>
                             <View style={{ flex: 2, backgroundColor: "", alignItems: 'center' }}>
                                 <TouchableOpacity>
-                                    <Text style={{ color: 'darkorange' }}>Comment</Text>
+                                    {/* <Text style={{ color: 'darkorange' }}>Comment</Text> */}
                                 </TouchableOpacity>
                             </View>
 
@@ -138,7 +138,7 @@ const ViewAdvisorGigs = () => {
                         }]}>
                             <View style={{ flex: 2, backgroundColor: "", alignItems: 'center' }}>
                                 <TouchableOpacity>
-                                    <Text style={{ color: 'darkorange' }}>Comment</Text>
+                                    {/* <Text style={{ color: 'darkorange' }}>Comment</Text> */}
                                 </TouchableOpacity>
                             </View>
 
